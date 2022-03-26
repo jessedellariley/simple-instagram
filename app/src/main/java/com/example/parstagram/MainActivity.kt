@@ -46,6 +46,11 @@ class MainActivity : AppCompatActivity() {
             onLaunchCamera()
         }
 
+        findViewById<Button>(R.id.btnLogout).setOnClickListener {
+            ParseUser.logOut()
+            goToLoginActivity()
+        }
+
         queryPosts()
     }
 
@@ -63,7 +68,11 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Log.i(TAG, "Successfully saved post")
                 // Reset EditText to be empty again
+                val etDescription = findViewById<EditText>(R.id.description)
+                etDescription.setText("")
                 // Reset ImageView to be empty again
+                val image = findViewById<ImageView>(R.id.imageView)
+                image.setImageResource(0)
             }
         }
     }
@@ -148,6 +157,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun goToLoginActivity() {
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     companion object {
